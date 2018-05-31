@@ -6,7 +6,9 @@ const dueCardEmailHtml = require('./views/due_cards_email.html.js');
 const newCardEmailText = require('./views/new_cards_email.text.js');
 const newCardEmailHtml = require('./views/new_cards_email.html.js');
 const mailer = require('@sendgrid/mail');
-const { classes: { EmailAddress } } = require('@sendgrid/helpers');
+const {
+  classes: { EmailAddress },
+} = require('@sendgrid/helpers');
 
 mailer.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -14,6 +16,8 @@ const fromAddress = new EmailAddress({ name: 'Pensieve', email: 'hello@pensieve.
 
 module.exports.sendDueCardsEmail = async (userId) => {
   if (!userId) return;
+
+  userId = userId.toString();
 
   const user = await User.findOne({ _id: userId, 'prefs.emailNotifs': true });
   const url = 'https://www.pensieve.space/sessions/new';
@@ -34,6 +38,8 @@ module.exports.sendDueCardsEmail = async (userId) => {
 
 module.exports.sendNewCardsEmail = async (userId) => {
   if (!userId) return;
+
+  userId = userId.toString();
 
   const user = await User.findOne({ _id: userId, 'prefs.emailNotifs': true });
   const oneDayAgo = new Date();

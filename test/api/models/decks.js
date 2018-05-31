@@ -8,7 +8,7 @@ describe('Deck model', () => {
   describe('get', () => {
     it('should return single deck for user', (done) => {
       Deck.get(deck1._id, user1._id).then((deck) => {
-        expect(deck._id).to.deep.equal(deck1._id);
+        expect(deck._id.equals(deck1._id)).to.be.true;
         expect(deck.title).to.deep.equal(deck.title);
 
         done();
@@ -32,7 +32,7 @@ describe('Deck model', () => {
       Deck.new(newDeck, user1._id).then((deck) => {
         expect(deck.title).to.equal(newDeck.title);
         expect(deck.description).to.equal(newDeck.description);
-        expect(deck.user).to.deep.equal(user1._id);
+        expect(deck.user.equals(user1._id)).to.be.true;
 
         done();
       });
@@ -44,7 +44,7 @@ describe('Deck model', () => {
       Deck.update(deck1._id, newDeck, user1._id).then((deck) => {
         expect(deck.title).to.equal(newDeck.title);
         expect(deck.description).to.equal(newDeck.description);
-        expect(deck.user).to.deep.equal(user1._id);
+        expect(deck.user.equals(user1._id)).to.be.true;
 
         done();
       });
